@@ -52,6 +52,62 @@ namespace SeleniumLearning.CustomMethods
             Actions action = new Actions(MyDriver);
             action.ClickAndHold(sourceElement).MoveToElement(destinationElement).Release().Build().Perform();
         }
+        
+
+        public static void ActionClick(this IWebElement Element)
+        {
+            Actions action = new Actions(MyDriver);
+            action.MoveToElement(Element).Build().Perform();
+        }
+        public static void ActionHoverAndClick(this IWebElement ElementHover, IWebElement ElementClick)
+        {
+            Actions action = new Actions(MyDriver);
+            action.MoveToElement(ElementHover);
+            action.MoveToElement(ElementClick);
+            action.Click().Build().Perform();
+            Thinktime(2);
+        }
+
+
+        // This method removes all spaces present between the text that are inserted 
+        // accidentaly by the user and converts the text to upper Case
+        public static string TrimAllSpace(string Text)
+        {
+            return String.Join(" ", Text.Split(new char[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries));
+
+        }
+
+        public static void ScrollintoView(this IWebElement Element)
+        {
+            IJavaScriptExecutor js = MyDriver as IJavaScriptExecutor;
+            // Run the javascript command 'scrollintoview on the element
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", Element);
+            Thinktime(2);
+        }
+
+        // Method to click and verify page navigation 
+        public static void ClickPageNavigation(IWebElement hyperlink, IWebElement landingPageObj)
+        {
+            try
+            {
+                hyperlink.Click();
+                Thinktime(5);
+                AssertClass.AssertElementIsPresent(landingPageObj);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Not able to navigate : {0}", ex.Message);
+                throw ex;
+            }
+
+        }
+
+        public static void Thinktime(int Time)
+        {
+            System.Threading.Thread.Sleep(Time * 1000);
+        }
+
 
     }
 }

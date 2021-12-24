@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SeleniumLearning.CustomMethods
 {
-    internal class ScreenShotsClass
+    public static class ScreenShotsClass
     {
     }
 }
